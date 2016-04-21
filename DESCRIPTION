@@ -1,11 +1,11 @@
 Package: mytools
-Title: What the Package Does (one line, title case)
+Title: Tools That I Use All The Time
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Rob", "Briers", email = "r.briers@napier.ac.uk", role = c("aut", "cre"))
+Description: Just a collection of code/tools that I have gathered over time as I find it useful.
 Depends:
-    R (>= 3.2.4)
-License: What license is it under?
+    R (>= 3.0.0)
+License: GPL >=3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
