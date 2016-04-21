@@ -1,4 +1,9 @@
-
+#' Chi-squared contingency table by randomisation
+#' @description  function to determine significance of chi-squared goodness 
+#' of fit by randomisation to deal with low frequencies.
+#' @param observed A dataframe with a single column of observed frequencies
+#' @param rands The number of randomisations to perform
+#' 
 chisq.randomised<-function(observed, rands){
   
   # function to determine significance of chi-squared goodness of fit by
