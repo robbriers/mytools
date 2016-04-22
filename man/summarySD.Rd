@@ -23,11 +23,8 @@ grouping variables.}
 \item{conf.interval}{The percent range of the confidence interval (default 
 is 95%).}
 }
-\value{
-A summary of the data, with the required measure of variability.
+\value{A data frame containing the summarised data.
 }
-\description{
-Gives count, mean, standard deviation, standard error of the 
-mean, and confidence interval (default 95%).
+\description{Summarises a data frame, based on levels of a specified factor.
 }
 

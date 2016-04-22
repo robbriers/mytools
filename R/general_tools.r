@@ -6,13 +6,12 @@
 #' @export loader
 
 loader<- function(){
-  frame <-read.csv(file.choose(),header=T)
+  frame <-read.csv(file.choose(),header=TRUE)
   return(frame)
 }
 
 #' Summary of data
-#' @description Gives count, mean, standard deviation, standard error of the 
-#' mean, and confidence interval (default 95%).
+#' @description Summarises a data frame, based on levels of a specified factor.
 #' @param data A data frame containing the data to be summarised.
 #' @param measurevar The name of a column that contains the variable to be 
 #' summarized.
@@ -22,7 +21,7 @@ loader<- function(){
 #' @param na.rm A boolean that indicates whether to ignore NA's
 #' @param conf.interval The percent range of the confidence interval (default 
 #' is 95%).
-#' @return A summary of the data, with the required measure of variability.
+#' @return A data frame containing the summarised data.
 #' @export summarySD
 summarySD <- function(data=NULL, measurevar, groupvars, error="sd", na.rm=FALSE,
                       conf.interval=.95, .drop=TRUE) {
@@ -86,8 +85,6 @@ plotbar<-function(data, bar, factor, error){
     theme_bw()
   
 }
-## plots mean and error bar as bar chart, for two factors, first as axis, second as legend
-## must convert continuous factors to factors (as.factor) in original dataframe before use
 #' Plot means and error bars for two factors
 #' @description Plots a standard 'mean and error bar figure for levels of 
 #' two factors. Factors represented as continuous variables must be 
@@ -128,10 +125,8 @@ plotbar2<-function(data, bar, factor, legend, error){
 #' @param error The type of error value to be calculated. Options are 
 #' "sd", "se" or "ci". Defaults to "sd".
 #' @return A line plot of means and error bars for a single factor.
-#' @export plotbar
-
-## plots mean and error bar as line chart, for single factor
-
+#' @export plotline
+#' 
 plotline<-function(data, val, factor, error="sd"){
   summdata<-summarySD(data, measurevar=val, groupvars=factor, error, na.rm=TRUE)
   ggplot(summdata, aes_string(x=factor, y=val)) + 
@@ -141,7 +136,23 @@ plotline<-function(data, val, factor, error="sd"){
     theme_bw()
 }
 
-## plots mean and error bar as line chart, for two factors, first as axis, second as legend
+#' Plot mean and error bar as line chart, for two factors, first as axis, 
+#' second as legend.
+#' @description Plots a standard 'mean and error bar figure for levels of 
+#' two factors as a line plot. Factors represented as continuous variables 
+#' must be converted to an actual factor (using as.factor) before use.  First 
+#' factor is represented as categories on the x-axis and the second as levels 
+#' in the plot legend.
+#' @param data The dataset containing the values to be plotted.
+#' @param val The column of the dataset representing the values to be averaged.
+#' @param factor The column representing the grouping factor (categories on 
+#' the x-axis.
+#' @param legend The column representing the grouping factor to be shown in 
+#' the legend.
+#' @param error The type of error value to be calculated. Options are 
+#' "sd", "se" or "ci". Defaults to "sd".
+#' @return A line plot of means and error bars for two factors.
+#' @export plotline2
 
 plotline2<-function(data, val, factor, legend, error){
   summdata<-summarySD(data, measurevar=val, groupvars=c(factor,legend), error, na.rm=TRUE)
@@ -152,6 +163,12 @@ plotline2<-function(data, val, factor, legend, error){
     theme_bw()
 }
 
+#' Perform standard model fit checks
+#' @description For a fitted model (lm etc.) performs standard model checking 
+#' plots (residuals vs. fits, qq plot) etc.
+#' @param model The object containing the fitted model.
+#' @param resp The response variable in the fitted model.
+#' @export checkme
 
 checkme<-function(model, resp){
   plot(model)
@@ -159,13 +176,25 @@ checkme<-function(model, resp){
   qqnorm(model,~ resid(.))
 }
 
+#' Sets contrasts to 'sum' option
+#' @description For linear models, sets the contrasts option from the 
+#' default to 'sum' i.e. sum to zero contrasts. This gives output consistent 
+#' with Minitab etc.
+#' @export consum
+
 consum<-function(){
   options(contrasts=c('contr.sum','contr.poly'))
 }
+
+#' Sets contrasts to 'treatment' option
+#' @description For linear models, sets the contrasts option to 'treatment' 
+#' i.e. contrasts are set to compare each level with the baseline level 
+#' (non-orthogonal).
+#' @export contre
+
 contre<-function(){
   options(contrasts=c('contr.treatment','contr.poly'))
 }
-
 
 #' Transpose data layout
 #' @description Transposes a dataset, correctly processing column and
